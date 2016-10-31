@@ -1,0 +1,115 @@
+<html>
+<head>
+	<title>Giphy API</title>
+	<style type="text/css">
+		button, div, form, input {
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Vehicle Search</h1>
+
+    <div id="buttonsView"></div>
+
+    <form id="vehicle-form">
+    <label for="vehicle-input">Add a vehicle!</label>
+    <input type="text" id="vehicle-input"><br>
+    
+    <input id="addVehicle" type="submit" value="Add a vehicle!">
+    </form>
+
+    <div id="vehiclesView"></div>
+
+<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script type="text/javascript">
+
+$(document).on("click", ".gif", imageChangeState);
+
+function imageChangeState() {          
+
+    var state = $(this).attr("data-state");
+    var animateImage = $(this).attr("data-animate");
+    var stillImage = $(this).attr("data-still");
+
+    if(state == "still") {
+        $(this).attr("src", animateImage);
+        $(this).attr("data-state", "animate");
+    }
+
+    else if(state == "animate") {
+        $(this).attr("src", stillImage);
+        $(this).attr("data-state", "still");
+    }
+}
+
+var topics = ["car", "boat", "plane"];
+
+function displayVehicle(){
+
+    var vehicle = $(this).attr("data-name");
+    var limit = 1;
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + vehicle + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";   
+
+    $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+        console.log(response);
+
+        for(var j = 0; j < limit; j++) {
+
+            var vehicleDiv = $("<div>");
+            vehicleDiv.addClass("vehicle");
+            
+            var image = $("<img>");
+            image.attr("src", response.data[j].images.downsized_still.url);
+            image.attr("data-still", response.data[j].images.downsized_still.url);
+            image.attr("data-animate", response.data[j].images.downsized.url);
+            image.attr("data-state", "still");
+            image.attr("class", "gif");
+            vehicleDiv.append(image);
+
+            var rating = response.data[j].rating;
+            var pRating = $("<p>").text(rating);
+            vehicleDiv.append(pRating);
+
+            $("#vehiclesView").prepend(vehicleDiv);
+        }
+    });
+}
+
+function renderButtons(){ 
+
+    $("#buttonsView").empty();
+
+    for (var i = 0; i < topics.length; i++){
+
+        var v = $("<button>") 
+        v.addClass("vehicle");  
+        v.attr("data-name", topics[i]); 
+        v.text(topics[i]); 
+        $("#buttonsView").append(v); 
+    }
+}
+
+$("#addVehicle").on("click", function(){
+
+    var vehicle = $("#vehicle-input").val().trim();
+
+    topics.push(vehicle);
+                
+    renderButtons();
+
+    return false;
+})
+
+
+$(document).on("click", ".vehicle", displayVehicle);
+
+renderButtons();
+
+</script>
+
+</body>
+</html>
