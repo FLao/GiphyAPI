@@ -1,27 +1,37 @@
 <html>
 <head>
 	<title>Video Game Series Giphy API</title>
-	<style type="text/css">
-		button, div, form, input {
-			margin: 10px;
-		}
-	</style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>Video Game Series Search</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Video Game Series Giphy Search</h1>
+        </div>
+    </div>
 
-    <div id="buttonsView"></div>
+    <div class="row">
+        <div class="col-md-12" id="buttonsView"></div>
+    </div>
 
-    <form id="videogame-form">
-    <label for="videogame-input">Add a video game series!</label>
-    <input type="text" id="videogame-input"><br>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="videogame-form">
+                <label for="videogame-input">Add a video game series!</label>
+                <input type="text" id="videogame-input"><br>
+                <input id="addVideogame" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="videogamesView"></div>
+    </div>
     
-    <input id="addVideogame" type="submit" value="Submit">
-    </form>
-
-    <div id="videogamesView"></div>
+</div>    
 
 <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script type="text/javascript">
@@ -33,14 +43,13 @@ $(document).ready(function(){
     function displayVideogame(){
 
         $("#videogamesView").empty();
-
         var videogame = $(this).attr("data-name");
         var limit = 10;
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + videogame + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";   
 
         $.ajax({url: queryURL, method: "GET"}).done(function(response) {
 
-            for(var j = 0; j < limit; j++) {
+            for(var j = 0; j < limit; j++) {    
 
                 var videogameDiv = $("<div>");
                 videogameDiv.addClass("videogameHolder");
@@ -55,9 +64,10 @@ $(document).ready(function(){
 
                 var rating = response.data[j].rating;
                 var pRating = $("<p>").text(rating);
-                videogameDiv.append(pRating);
+                videogameDiv.append(pRating)
 
                 $("#videogamesView").append(videogameDiv);
+                
             }
         });
     }
