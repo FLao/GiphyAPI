@@ -1,7 +1,6 @@
 button, div, form, input {
-	margin: 10px;
+	margin: 5px;
 }
-
 
 img {
 	max-width: 200px;
@@ -11,3 +10,23 @@ img {
 .videogameHolder {
 	float: left;
 }
+
+.btn-default {
+	background-color: #4aaaa5;
+	color: #ffffff;
+}
+
+body {
+	background-color: #f1f1f1;
+}
+
+.jumbotron {
+	background-color: #009688;
+	color: #ffffff;
+	font-family: 'MV Boli', Helvetica, sans-serif;
+}
+
+p {
+	font-weight: bold;
+}
+
