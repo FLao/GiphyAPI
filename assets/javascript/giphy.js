@@ -57,7 +57,7 @@ $(document).ready(function(){
 
         if(state == "still") {
             $(this).attr("src", animateImage);
-            $(this).attr("data-state", "animate");s
+            $(this).attr("data-state", "animate");
         }
 
         else if(state == "animate") {
