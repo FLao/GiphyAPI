@@ -7,7 +7,7 @@ $(document).ready(function(){
         $("#videogamesView").empty();
         var videogame = $(this).attr("data-name");
         var limit = 10;
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + videogame + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";   
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + videogame + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";   
 
         $.ajax({url: queryURL, method: "GET"}).done(function(response) {
 
