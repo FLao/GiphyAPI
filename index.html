@@ -2,7 +2,7 @@
 <head>
 	<title>Video Game Series Giphy API</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <form id="videogame-form">
-                <label for="videogame-input">Add a video game series!</label>
+                <label for="videogame-input">Add a video game series</label>
                 <input type="text" id="videogame-input"><br>
                 <input id="addVideogame" type="submit" value="Submit" class="btn btn-default">
             </form>
@@ -31,95 +31,8 @@
 
 </div>    
 
-<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
-<script type="text/javascript">
-
-$(document).ready(function(){
-
-    var topics = ["Super Mario", "The Legend of Zelda", "Mega Man", "Sonic the Hedgehog", "Pacman", "Star Fox", "Metroid", "Donkey Kong", "Kid Icarus", "Final Fantasy", "Street Fighter", "F-Zero", "Punch Out"];
-
-    function displayVideogame(){
-
-        $("#videogamesView").empty();
-        var videogame = $(this).attr("data-name");
-        var limit = 10;
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + videogame + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";   
-
-        $.ajax({url: queryURL, method: "GET"}).done(function(response) {
-
-            for(var j = 0; j < limit; j++) {    
-
-                var videogameDiv = $("<div>");
-                videogameDiv.addClass("videogameHolder");
-            
-                var image = $("<img>");
-                image.attr("src", response.data[j].images.downsized_still.url);
-                image.attr("data-still", response.data[j].images.downsized_still.url);
-                image.attr("data-animate", response.data[j].images.downsized.url);
-                image.attr("data-state", "still");
-                image.attr("class", "gif");
-                videogameDiv.append(image);
-
-                var rating = response.data[j].rating;
-                var pRating = $("<p>").text("Rating: " + rating);
-                videogameDiv.append(pRating)
-
-                $("#videogamesView").append(videogameDiv);
-                
-            }
-        });
-    }
-
-    function renderButtons(){ 
-
-        $("#buttonsView").empty();
-
-        for (var i = 0; i < topics.length; i++){
-
-            var v = $("<button>") 
-            v.attr("class", "btn btn-default");
-            v.attr("id", "videogame")  
-            v.attr("data-name", topics[i]); 
-            v.text(topics[i]); 
-            $("#buttonsView").append(v); 
-        }
-    }
-
-    function imageChangeState() {          
-
-        var state = $(this).attr("data-state");
-        var animateImage = $(this).attr("data-animate");
-        var stillImage = $(this).attr("data-still");
-
-        if(state == "still") {
-            $(this).attr("src", animateImage);
-            $(this).attr("data-state", "animate");s
-        }
-
-        else if(state == "animate") {
-            $(this).attr("src", stillImage);
-            $(this).attr("data-state", "still");
-        }   
-    }
-
-    $("#addVideogame").on("click", function(){
-
-        var videogame = $("#videogame-input").val().trim();
-
-        topics.push(videogame);
-                
-        renderButtons();
-
-        return false;
-    })
-
-    renderButtons();
-
-    $(document).on("click", "#videogame", displayVideogame);
-    $(document).on("click", ".gif", imageChangeState);
-});
-
-</script>
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="assets/javascript/giphy.js"></script>
 
 </body>
 </html>

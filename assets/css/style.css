@@ -11,9 +11,14 @@ img {
 	float: left;
 }
 
+#videogame-form {
+	float: right;
+}
+
 .btn-default {
 	background-color: #4aaaa5;
 	color: #ffffff;
+	font-weight: bold
 }
 
 body {
